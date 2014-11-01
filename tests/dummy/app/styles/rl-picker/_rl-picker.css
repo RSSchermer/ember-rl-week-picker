@@ -1,7 +1,3 @@
-html, body {
-  margin: 20px;
-}
-
 .rl-picker {
   position: relative;
 }
@@ -123,39 +119,4 @@ html, body {
 
 .rl-picker ul li.active {
   background-color: #ddd;
-}
-
-.week-table {
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-.week-table th {
-  font-weight: normal;
-}
-
-.week-table th.week-column-header {
-  font-weight: bold;
-}
-
-.week-table td {
-  border: 1px solid black;
-  text-align: center;
-  width: 12.5%;
-}
-
-.week-table td.week-column {
-  font-weight: bold;
-}
-
-.week-table td.not-in-month {
-  color: #777;
-}
-
-.week-table tbody tr.active, .week-table tbody tr:hover {
-  background-color: #ddd;
-}
-
-.week-table tbody tr:hover {
-  cursor: pointer;
 }

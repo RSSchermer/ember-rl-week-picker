@@ -1,25 +1,79 @@
 # Ember-rl-week-picker
 
-This README outlines the details of collaborating on this Ember addon.
+Ember week picker component using moment.js.
+
+[![Build Status](https://travis-ci.org/RSSchermer/ember-rl-week-picker.svg?branch=master)](https://travis-ci.org/RSSchermer/ember-rl-week-picker)
+
+See also:
+
+* [ember-rl-year-picker](https://github.com/RSSchermer/ember-rl-year-picker)
+* [ember-rl-month-picker](https://github.com/RSSchermer/ember-rl-month-picker)
+
+## Demo
+
+Demo avialable [here](http://rsschermer.github.io/ember-rl-week-picker/).
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+```bash
+npm install ember-rl-week-picker --save-dev
+```
 
-## Running
+This addon does not automatically import a stylesheet into your application. Run the following command to generate a
+stylesheet you can use as a base:
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+```bash
+ember generate rl-picker-css
+ember generate rl-week-picker-css
+```
 
-## Running Tests
+This will create 2 css files: one containing the base css for rl-picker at `app/styles/rl-picker/_rl-picker.css`, and
+one containing some css specific for the week picker at `app/styles/rl-picker/_rl-week-picker.css`. You can include
+these stylesheets into your application's sass or less files (you may have to change the file extensions them to
+`.scss` or `.less`).
 
-* `ember test`
-* `ember test --server`
+## Usage
 
-## Building
+```handlebars
+{{rl-week-picker year=currentYear weekNumber=currentWeek}}
+```
 
-* `ember build`
+Bind the `year` and `weekNumber` properties to properties on your controller. Ember's two-way bindings will keep the
+value updated.
 
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+The following properties can be set to customize the month picker:
+
+* `weekPlaceholderText` (default: 'Week'): the text displayed on the picker toggle button when the `weekNumber` value
+  is null.
+* `flatMode` (default: false): when set to true, only the picker is shown (see demo).
+* `monthLabels` (default: 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'): the labels used for the months, separated
+  by commas, or bound to an Ember property containing an array or strings.
+* `dayLabels` (default: 'Mo,Tu,We,Th,Fr,Sa,Su'): the labels used for the days, separated by commas, or bound to an
+  Ember property containing an array or strings.
+* `yearsPerPage` (default: 12): the number of years shown on a page.
+* `decreaseButtonText` (default: '<'): the text on the decrease year button. Set for example to
+  `"<i class='fa fa-chevron-left'></i>"` to work with Font Awesome.
+* `increaseButtonText` (default: '>'): the text on the decrease year button. Set for example to
+  `"<i class='fa fa-chevron-right'></i>"` to work with Font Awesome.
+* `previousPageButtonText` (default: '<'): the text on the previous page button. Set for example to
+  `"<i class='fa fa-chevron-left'></i>"` to work with Font Awesome.
+* `nextPageButtonText` (default: '>'): : the text on the next page button. Set for example to
+  `"<i class='fa fa-chevron-right'></i>"` to work with Font Awesome.
+
+If you want to set different defaults for all week pickers in your application, extend the component and override the
+defaults with your own:
+
+```javascript
+// app/components/rl-week-picker.js
+import RlWeekPickerComponent from 'ember-rl-week-picker/components/rl-week-picker';
+
+export default RlWeekPickerComponent.extend({
+  decreaseButtonText: "<i class='fa fa-chevron-left'></i>",
+
+  increaseButtonText: "<i class='fa fa-chevron-right'></i>",
+
+  previousPageButtonText: "<i class='fa fa-chevron-left'></i>",
+
+  nextPageButtonText: "<i class='fa fa-chevron-right'></i>"
+});
+```
