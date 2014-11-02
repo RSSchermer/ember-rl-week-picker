@@ -19,7 +19,7 @@
   "dependencies": {
     "ember-moment": "^0.2.0",
     "ember-rl-dropdown": "0.0.3",
-    "ember-rl-month-picker": "0.0.8"
+    "ember-rl-month-picker": "0.0.9"
   },
   "devDependencies": {
     "body-parser": "^1.2.0",
