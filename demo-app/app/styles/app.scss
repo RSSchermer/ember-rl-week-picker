@@ -1,0 +1,11 @@
+@import 'rl-picker/rl-picker';
+@import 'rl-picker/rl-week-picker';
+
+html, body {
+  margin: 20px;
+}
+
+.rl-week-picker {
+  float: left;
+  margin-right: 150px;
+}
