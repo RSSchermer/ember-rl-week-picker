@@ -17,6 +17,7 @@ Demo avialable [here](http://rsschermer.github.io/ember-rl-week-picker/).
 
 ```bash
 npm install ember-rl-week-picker --save-dev
+ember generate ember-moment
 ```
 
 This addon does not automatically import a stylesheet into your application. Run the following command to generate a
