@@ -27,10 +27,14 @@
   color: #777;
 }
 
-.week-table tbody tr.active, .week-table tbody tr:hover {
+.week-table tbody tr.active, .week-table tbody tr:hover:not(.out-of-range) {
   background-color: #ddd;
 }
 
-.week-table tbody tr:hover {
+.week-table tbody tr.out-of-range {
+  color: #777;
+}
+
+.week-table tbody tr:hover:not(.out-of-range) {
   cursor: pointer;
 }

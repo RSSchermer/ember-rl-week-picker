@@ -253,3 +253,97 @@ function () {
     equal(component.get('displayedMonthNumber'), 1);
   });
 });
+
+test('a week can not be selected when it is smaller than the minWeek specified', function () {
+  var component = this.subject();
+  var $component = this.append();
+
+  Ember.run(function(){
+    component.setProperties({ 'year': 2000, 'weekNumber': 3, 'flatMode': true, 'minWeek': "2000-W3" });
+  });
+
+  click('td.week-column:contains("1")');
+
+  andThen(function () {
+    equal(component.get('year'), 2000);
+    equal(component.get('weekNumber'), 3);
+  });
+});
+
+test('the decrease week button is disabled when the current week <= the minWeek specified', function () {
+  var component = this.subject();
+  var $component = this.append();
+
+  Ember.run(function(){
+    component.setProperties({ 'year': 1998, 'weekNumber': 2, 'minWeek': "1998-W2" });
+  });
+
+  click('.decrease-btn');
+
+  andThen(function () {
+    equal(component.get('year'), 1998);
+    equal(component.get('weekNumber'), 2);
+  });
+});
+
+test('the previous page button is disabled when the last week on the previous page < the minWeek specified', function () {
+  var component = this.subject();
+  var $component = this.append();
+
+  Ember.run(function(){
+    component.setProperties({ 'year': 2000, 'weekNumber': 2, 'flatMode': true, 'minWeek': '2000-W2' });
+  });
+
+  click('.previous-page-btn');
+
+  andThen(function () {
+    equal($component.find('.month-picker-toggle-btn').text().trim(), 'Jan 2000');
+  });
+});
+
+test('a week can not be selected when it is greater than the maxWeek specified', function () {
+  var component = this.subject();
+  var $component = this.append();
+
+  Ember.run(function(){
+    component.setProperties({ 'year': 2000, 'weekNumber': 2, 'flatMode': true, 'maxWeek': "2000-W2" });
+  });
+
+  click('td.week-column:contains("3")');
+
+  andThen(function () {
+    equal(component.get('year'), 2000);
+    equal(component.get('weekNumber'), 2);
+  });
+});
+
+test('the increase week button is disabled when the current week >= the maxWeek specified', function () {
+  var component = this.subject();
+  var $component = this.append();
+
+  Ember.run(function(){
+    component.setProperties({ 'year': 1998, 'weekNumber': 2, 'maxWeek': "1998-W2" });
+  });
+
+  click('.increase-btn');
+
+  andThen(function () {
+    equal(component.get('year'), 1998);
+    equal(component.get('weekNumber'), 2);
+  });
+});
+
+test('the next page button is disabled when the first week on the next page > the minWeek specified', function () {
+  var component = this.subject();
+  var $component = this.append();
+
+  Ember.run(function(){
+    component.setProperties({ 'year': 2000, 'weekNumber': 51, 'flatMode': true, 'maxWeek': '2000-W52' });
+  });
+
+  click('.next-page-btn');
+
+  andThen(function () {
+    equal($component.find('.month-picker-toggle-btn').text().trim(), 'Dec 2000');
+  });
+});

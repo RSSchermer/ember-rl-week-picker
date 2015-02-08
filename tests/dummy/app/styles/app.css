@@ -1,7 +1,3 @@
-html, body {
-  margin: 20px;
-}
-
 .rl-picker {
   position: relative;
 }
@@ -14,7 +10,7 @@ html, body {
   padding: 5px;
 }
 
-.rl-picker button:hover {
+.rl-picker button:hover:not([disabled]) {
   cursor: pointer;
   background-color: #ddd;
 }
@@ -93,6 +89,7 @@ html, body {
   padding: 0;
   border: 0;
   margin: 0;
+  width: 100%;
 }
 
 .rl-picker ul {
@@ -116,7 +113,7 @@ html, body {
   border: 1px solid white;
 }
 
-.rl-picker ul li:hover {
+.rl-picker ul li:hover:not(.out-of-range) {
   cursor: pointer;
   background-color: #ddd;
 }
@@ -125,13 +122,19 @@ html, body {
   background-color: #ddd;
 }
 
+.rl-picker ul li.out-of-range {
+  color: #999;
+}
+
 .week-table {
+  width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
 }
 
 .week-table th {
   font-weight: normal;
+  text-align: center;
 }
 
 .week-table th.week-column-header {
@@ -152,10 +155,14 @@ html, body {
   color: #777;
 }
 
-.week-table tbody tr.active, .week-table tbody tr:hover {
+.week-table tbody tr.active, .week-table tbody tr:hover:not(.out-of-range) {
   background-color: #ddd;
 }
 
-.week-table tbody tr:hover {
+.week-table tbody tr.out-of-range {
+  color: #777;
+}
+
+.week-table tbody tr:hover:not(.out-of-range) {
   cursor: pointer;
 }

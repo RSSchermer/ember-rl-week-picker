@@ -1,6 +1,9 @@
 {{#unless flatMode}}
   <div class='buttons'>
-    <button class='decrease-btn' {{action 'decreaseWeek'}}>{{{decreaseButtonText}}}</button>
+    <button class='decrease-btn' {{action 'decreaseWeek'}} {{bind-attr disabled="decreaseWeekButtonDisabled"}}>
+      {{{decreaseButtonText}}}
+    </button>
+
     <button class='picker-toggle-btn rl-dropdown-toggle' {{action 'toggleDropdown'}}>
       {{#if weekText}}
         {{weekText}}
@@ -9,7 +12,10 @@
       {{/if}}
       <i class='caret'></i>
     </button>
-    <button class='increase-btn' {{action 'increaseWeek'}}>{{{increaseButtonText}}}</button>
+
+    <button class='increase-btn' {{action 'increaseWeek'}} {{bind-attr disabled="increaseWeekButtonDisabled"}}>
+      {{{increaseButtonText}}}
+    </button>
   </div>
 {{/unless}}
 
@@ -17,14 +23,21 @@
   <div class='picker rl-dropdown'>
     {{#if monthPickerMode}}
       {{rl-month-picker flatMode=true previousPageButtonText=previousPageButtonText nextPageButtonText=nextPageButtonText
-        pickedMonth="pickedMonth" monthLabels=monthLabels year=displayedYear monthNumber=displayedMonthNumber}}
+        pickedMonth="pickedMonth" monthLabels=monthLabels year=displayedYear monthNumber=displayedMonthNumber
+        minMonth=minMonth maxMonth=maxMonth}}
     {{else}}
       <div class='page-controls'>
-        <button class='previous-page-btn' {{action 'previousPage'}}>{{{previousPageButtonText}}}</button>
+        <button class='previous-page-btn' {{action 'previousPage'}} {{bind-attr disabled="previousPageButtonDisabled"}}>
+          {{{previousPageButtonText}}}
+        </button>
+
         <button class='month-picker-toggle-btn' {{action 'openMonthPicker'}}>
           {{monthText}} <i class='caret'></i>
         </button>
-        <button class='next-page-btn' {{action 'nextPage'}}>{{{nextPageButtonText}}}</button>
+
+        <button class='next-page-btn' {{action 'nextPage'}} {{bind-attr disabled="nextPageButtonDisabled"}}>
+          {{{nextPageButtonText}}}
+        </button>
       </div>
 
       <table class='week-table'>
@@ -38,8 +51,8 @@
         </thead>
 
         <tbody>
-          {{#each week in weeks}}
-            <tr {{bind-attr class="week.isActive:active"}} {{action 'pickedWeek' week.year week.weekNumber}}>
+          {{#each week in weeksOnPage}}
+            <tr {{bind-attr class="week.isActive:active week.outOfRange:out-of-range"}} {{action 'pickedWeek' week.year week.weekNumber}}>
               <td class="week-column">{{week.weekNumber}}</td>
               {{#each day in week.days}}
                 <td {{bind-attr class="day.inDisplayedMonth:in-month:not-in-month"}}>{{day.date}}</td>
