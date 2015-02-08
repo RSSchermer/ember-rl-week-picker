@@ -37,10 +37,14 @@ these stylesheets into your application's sass or less files (you may have to ch
 
 ```handlebars
 {{rl-week-picker year=currentYear weekNumber=currentWeek}}
+
+<!-- You can also use a week string instead of a year and week number -->
+{{rl-month-picker month="2015-W36"}}
 ```
 
 Bind the `year` and `weekNumber` properties to properties on your controller. Ember's two-way bindings will keep the
-value updated.
+value updated. If you don't need the year and week number separately, you can also bind a string to the `week` property,
+formatted as `{year}-W{weekNumber}` (e.g. `2015-W36` for 2015, week 36).
 
 The following properties can be set to customize the month picker:
 
@@ -52,6 +56,10 @@ The following properties can be set to customize the month picker:
 * `dayLabels` (default: 'Mo,Tu,We,Th,Fr,Sa,Su'): the labels used for the days, separated by commas, or bound to an
   Ember property containing an array or strings.
 * `yearsPerPage` (default: 12): the number of years shown on a page.
+* `minWeek` (default: null): the minimum week that can be selected. Takes a string formatted as `{year}-W{weekNumber}`
+  (e.g. `2015-W36` for 2015, week 36).
+* `maxWeek` (default: null): the maximum week that can be selected. Takes a string formatted as `{year}-W{weekNumber}`
+  (e.g. `2015-W36` for 2015, week 36).
 * `decreaseButtonText` (default: '<'): the text on the decrease year button. Set for example to
   `"<i class='fa fa-chevron-left'></i>"` to work with Font Awesome.
 * `increaseButtonText` (default: '>'): the text on the decrease year button. Set for example to
