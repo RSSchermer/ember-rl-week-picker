@@ -43,6 +43,8 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
   clickOutEventNamespace: 'rl-week-picker',
 
+  weekColumnHeader: 'W#',
+
   week: function(key, value) {
     // setter
     if (arguments.length > 1 && value !== null) {
@@ -217,7 +219,7 @@ export default Ember.Component.extend(DropdownComponentMixin, {
   actions: {
     decreaseWeek: function () {
       if (!this.get('decreaseWeekButtonDisabled')) {
-        var m = this.currentMoment().subtract(1, 'weeks');
+        var m = this.currentMoment().isoWeekday(4).subtract(1, 'weeks');
         var newYear = m.year();
         var newWeek = m.isoWeek();
 
