@@ -68,6 +68,7 @@ The following properties can be set to customize the month picker:
   `"<i class='fa fa-chevron-left'></i>"` to work with Font Awesome.
 * `nextPageButtonText` (default: '>'): : the text on the next page button. Set for example to
   `"<i class='fa fa-chevron-right'></i>"` to work with Font Awesome.
+* `weekColumnHeader` (default: W#): the text rendered above the column that numbers the weeks.
 
 If you want to set different defaults for all week pickers in your application, extend the component and override the
 defaults with your own:
