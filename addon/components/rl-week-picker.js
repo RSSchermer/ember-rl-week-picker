@@ -230,7 +230,7 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
     increaseWeek: function () {
       if (!this.get('increaseWeekButtonDisabled')) {
-        var m = this.currentMoment().add(1, 'weeks');
+        var m = this.currentMoment().isoWeekday(4).add(1, 'weeks');
         var newYear = m.year();
         var newWeek = m.isoWeek();
 
