@@ -39,7 +39,7 @@ these stylesheets into your application's sass or less files (you may have to ch
 {{rl-week-picker year=currentYear weekNumber=currentWeek}}
 
 <!-- You can also use a week string instead of a year and week number -->
-{{rl-month-picker month="2015-W36"}}
+{{rl-week-picker week="2015-W36"}}
 ```
 
 Bind the `year` and `weekNumber` properties to properties on your controller. Ember's two-way bindings will keep the
@@ -68,7 +68,7 @@ The following properties can be set to customize the month picker:
   `"<i class='fa fa-chevron-left'></i>"` to work with Font Awesome.
 * `nextPageButtonText` (default: '>'): : the text on the next page button. Set for example to
   `"<i class='fa fa-chevron-right'></i>"` to work with Font Awesome.
-* `weekColumnHeader` (default: W#): the text rendered above the column that numbers the weeks.
+* `weekColumnHeader` (default: 'W#'): the text rendered above the column that numbers the weeks.
 
 If you want to set different defaults for all week pickers in your application, extend the component and override the
 defaults with your own:

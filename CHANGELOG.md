@@ -1,5 +1,9 @@
 # Ember-rl-week-picker Changelog
 
+# 0.2.0
+
+Added setting for the header string above the week-number column.
+
 # 0.1.0
 
 Added `minWeek` and `maxWeek` options for constraining the weeks that can be selected by the user.
