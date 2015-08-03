@@ -1,10 +1,14 @@
-# Ember-rl-week-picker Changelog
+# Ember-rl-week-picker Change Log
 
-# 0.2.0
+## 0.3.0
+
+Upgrades templates syntax to the new HTML-bars syntax, which means as of this version Ember 1.12 or higher is required.
+
+## 0.2.0
 
 Added setting for the header string above the week-number column.
 
-# 0.1.0
+## 0.1.0
 
 Added `minWeek` and `maxWeek` options for constraining the weeks that can be selected by the user.
 Some css changes may be required if you want to use this functionality. Weeks, months and years that are not within the
