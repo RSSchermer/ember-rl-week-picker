@@ -1,6 +1,6 @@
 {{#unless flatMode}}
   <div class='buttons'>
-    <button class='decrease-btn' {{action 'decreaseWeek'}} {{bind-attr disabled="decreaseWeekButtonDisabled"}}>
+    <button class='decrease-btn' {{action 'decreaseWeek'}} disabled='{{if decreaseWeekButtonDisabled "disabled"}}'>
       {{{decreaseButtonText}}}
     </button>
 
@@ -13,7 +13,7 @@
       <i class='caret'></i>
     </button>
 
-    <button class='increase-btn' {{action 'increaseWeek'}} {{bind-attr disabled="increaseWeekButtonDisabled"}}>
+    <button class='increase-btn' {{action 'increaseWeek'}} disabled='{{if increaseWeekButtonDisabled "disabled"}}'>
       {{{increaseButtonText}}}
     </button>
   </div>
@@ -27,7 +27,7 @@
         minMonth=minMonth maxMonth=maxMonth}}
     {{else}}
       <div class='page-controls'>
-        <button class='previous-page-btn' {{action 'previousPage'}} {{bind-attr disabled="previousPageButtonDisabled"}}>
+        <button class='previous-page-btn' {{action 'previousPage'}} disabled='{{if previousPageButtonDisabled "disabled"}}'>
           {{{previousPageButtonText}}}
         </button>
 
@@ -35,7 +35,7 @@
           {{monthText}} <i class='caret'></i>
         </button>
 
-        <button class='next-page-btn' {{action 'nextPage'}} {{bind-attr disabled="nextPageButtonDisabled"}}>
+        <button class='next-page-btn' {{action 'nextPage'}} disabled='{{if nextPageButtonDisabled "disabled"}}'>
           {{{nextPageButtonText}}}
         </button>
       </div>
@@ -44,18 +44,18 @@
         <thead>
           <tr>
             <th class="week-column-header">{{weekColumnHeader}}</th>
-            {{#each dayLabel in dayLabelsArray}}
+            {{#each dayLabelsArray as |dayLabel|}}
               <th>{{dayLabel}}</th>
             {{/each}}
           </tr>
         </thead>
 
         <tbody>
-          {{#each week in weeksOnPage}}
-            <tr {{bind-attr class="week.isActive:active week.outOfRange:out-of-range"}} {{action 'pickedWeek' week.year week.weekNumber}}>
+          {{#each weeksOnPage as |week|}}
+            <tr class='{{if week.isActive "active"}} {{if week.outOfRange "out-of-range"}}' {{action 'pickedWeek' week.year week.weekNumber}}>
               <td class="week-column">{{week.weekNumber}}</td>
-              {{#each day in week.days}}
-                <td {{bind-attr class="day.inDisplayedMonth:in-month:not-in-month"}}>{{day.date}}</td>
+              {{#each week.days as |day|}}
+                <td class='{{if day.inDisplayedMonth "in-month" "not-in-month"}}'>{{day.date}}</td>
               {{/each}}
             </tr>
           {{/each}}

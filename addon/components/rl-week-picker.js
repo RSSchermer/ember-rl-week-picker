@@ -35,53 +35,83 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
   nextPageButtonText: '>',
 
-  displayedYear: null,
-
-  displayedMonthNumber: null,
-
   isExpanded: false,
 
   clickOutEventNamespace: 'rl-week-picker',
 
   weekColumnHeader: 'W#',
 
-  week: function(key, value) {
-    // setter
-    if (arguments.length > 1 && value !== null) {
-      var nameParts = value.split(/\-W/i);
-      this.set('year', parseInt(nameParts[0]));
-      this.set('weekNumber',  parseInt(nameParts[1]));
+  displayedYear: null,
+
+  displayedMonthNumber: null,
+
+  init: function () {
+    this._super.apply(this, arguments);
+
+    this.updateDisplayedYearAndMonth();
+  },
+
+  week: Ember.computed('year', 'weekNumber', {
+    get: function () {
+      return this.buildWeekString(this.get('year'), this.get('weekNumber'));
+    },
+
+    set: function(key, weekString) {
+      if (weekString !== null) {
+        var parts = weekString.split(/\-W/i);
+        var year = parseInt(parts[0]);
+        var weekNumber = parseInt(parts[1]);
+
+        this.setProperties({ 'year': year, 'weekNumber': weekNumber });
+
+        return this.buildWeekString(year, weekNumber);
+      }
+
+      return null;
     }
+  }),
 
-    // getter
-    return this.buildWeekString(this.get('year'), this.get('weekNumber'));
-  }.property('year', 'weekNumber'),
+  minWeek: Ember.computed('minYear', 'minWeekNumber', {
+    get: function () {
+      return this.buildWeekString(this.get('minYear'), this.get('minWeekNumber'));
+    },
 
-  minWeek: function(key, value) {
-    // setter
-    if (arguments.length > 1 && value !== null) {
-      var nameParts = value.split(/\-W/i);
-      this.set('minYear', parseInt(nameParts[0]));
-      this.set('minWeekNumber',  parseInt(nameParts[1]));
+    set: function(key, weekString) {
+      if (weekString !== null) {
+        var parts = weekString.split(/\-W/i);
+        var year = parseInt(parts[0]);
+        var weekNumber = parseInt(parts[1]);
+
+        this.setProperties({ 'minYear': year, 'minWeekNumber': weekNumber });
+
+        return this.buildWeekString(year, weekNumber);
+      }
+
+      return null;
     }
+  }),
 
-    // getter
-    return this.buildWeekString(this.get('minYear'), this.get('minWeekNumber'));
-  }.property('minYear', 'minWeekNumber'),
+  maxWeek: Ember.computed('maxYear', 'maxWeekNumber', {
+    get: function () {
+      return this.buildWeekString(this.get('maxYear'), this.get('maxWeekNumber'));
+    },
 
-  maxWeek: function(key, value) {
-    // setter
-    if (arguments.length > 1 && value !== null) {
-      var nameParts = value.split(/\-W/i);
-      this.set('maxYear', parseInt(nameParts[0]));
-      this.set('maxWeekNumber',  parseInt(nameParts[1]));
+    set: function(key, weekString) {
+      if (weekString !== null) {
+        var parts = weekString.split(/\-W/i);
+        var year = parseInt(parts[0]);
+        var weekNumber = parseInt(parts[1]);
+
+        this.setProperties({ 'maxYear': year, 'maxWeekNumber': weekNumber });
+
+        return this.buildWeekString(year, weekNumber);
+      }
+
+      return null;
     }
+  }),
 
-    // getter
-    return this.buildWeekString(this.get('maxYear'), this.get('maxWeekNumber'));
-  }.property('maxYear', 'maxWeekNumber'),
-
-  minMonth: function () {
+  minMonth: Ember.computed('minYear', 'minWeekNumber', function () {
     var minYear = this.get('minYear');
     var minWeekNumber = this.get('minWeekNumber');
 
@@ -92,9 +122,9 @@ export default Ember.Component.extend(DropdownComponentMixin, {
     } else {
       return null;
     }
-  }.property('minYear', 'minWeekNumber'),
+  }),
 
-  maxMonth: function () {
+  maxMonth: Ember.computed('maxYear', 'maxWeekNumber', function () {
     var maxYear = this.get('maxYear');
     var maxWeekNumber = this.get('maxWeekNumber');
 
@@ -105,41 +135,41 @@ export default Ember.Component.extend(DropdownComponentMixin, {
     } else {
       return null;
     }
-  }.property('maxYear', 'maxWeekNumber'),
+  }),
 
-  monthPickerMode: function () {
+  monthPickerMode: Ember.computed('year', 'weekNumber', function () {
     return !this.get('year') || !this.get('weekNumber');
-  }.property('year', 'weekNumber'),
+  }),
 
-  pickerVisible: function () {
+  pickerVisible: Ember.computed('flatMode', 'dropdownExpanded', function () {
     return this.get('flatMode') || this.get('dropdownExpanded');
-  }.property('flatMode', 'dropdownExpanded'),
+  }),
 
-  monthLabelsArray: function () {
+  monthLabelsArray: Ember.computed('monthLabels', function () {
     var monthLabels = this.get('monthLabels');
 
-    return typeof monthLabels === 'string' ? monthLabels.split(',') : monthLabels;
-  }.property('monthLabels'),
+    return typeof monthLabels === 'string' ? Ember.A(monthLabels.split(',')) : Ember.A(monthLabels);
+  }),
 
-  dayLabelsArray: function () {
+  dayLabelsArray: Ember.computed('dayLabels', function () {
     var dayLabels = this.get('dayLabels');
 
-    return typeof dayLabels === 'string' ? dayLabels.split(',') : dayLabels;
-  }.property('dayLabels'),
+    return typeof dayLabels === 'string' ? Ember.A(dayLabels.split(',')) : Ember.A(dayLabels);
+  }),
 
-  decreaseWeekButtonDisabled: function () {
+  decreaseWeekButtonDisabled: Ember.computed('week', 'minWeek', function () {
     var minWeek = this.get('minWeek');
 
     return minWeek !== null && this.get('week') <= minWeek;
-  }.property('week', 'minWeek'),
+  }),
 
-  increaseWeekButtonDisabled: function () {
+  increaseWeekButtonDisabled: Ember.computed('week', 'maxWeek', function () {
     var maxWeek = this.get('maxWeek');
 
-    return maxWeek !== null && this.get('week') <= maxWeek;
-  }.property('week', 'maxWeek'),
+    return maxWeek !== null && this.get('week') >= maxWeek;
+  }),
 
-  monthText: function () {
+  monthText: Ember.computed('displayedMonthNumber', 'monthLabelsArray', 'displayedYear', function () {
     var monthNumber = this.get('displayedMonthNumber');
     var year = this.get('displayedYear');
 
@@ -148,9 +178,9 @@ export default Ember.Component.extend(DropdownComponentMixin, {
     } else {
       return null;
     }
-  }.property('displayedMonthNumber', 'monthLabelsArray', 'displayedYear'),
+  }),
 
-  weekText: function () {
+  weekText: Ember.computed('year', 'weekNumber', function () {
     var weekNumber = this.get('weekNumber');
     var year = this.get('year');
 
@@ -159,9 +189,9 @@ export default Ember.Component.extend(DropdownComponentMixin, {
     } else {
       return null;
     }
-  }.property('year', 'weekNumber'),
+  }),
 
-  weeksOnPage: function () {
+  weeksOnPage: Ember.computed('weekNumber', 'year', 'displayedMonthNumber', 'displayedYear', 'minWeek', 'maxWeek', function () {
     var monthNumber = this.get('displayedMonthNumber') - 1;
     var m = moment().year(this.get('displayedYear')).month(monthNumber).date(1);
     var weeks = [];
@@ -201,20 +231,20 @@ export default Ember.Component.extend(DropdownComponentMixin, {
       weeks.push(week);
     }
 
-    return weeks;
-  }.property('weekNumber', 'year', 'displayedMonthNumber', 'displayedYear', 'minWeek', 'maxWeek'),
+    return Ember.A(weeks);
+  }),
 
-  previousPageButtonDisabled: function () {
+  previousPageButtonDisabled: Ember.computed('weeksOnPage', 'minWeek', function () {
     var minWeek = this.get('minWeek');
 
     return minWeek !== null && this.get('weeksOnPage.firstObject.weekString') <= minWeek;
-  }.property('weeksOnPage', 'minWeek'),
+  }),
 
-  nextPageButtonDisabled: function () {
+  nextPageButtonDisabled: Ember.computed('weeksOnPage', 'maxWeek', function () {
     var maxWeek = this.get('maxWeek');
 
     return maxWeek !== null && this.get('weeksOnPage.lastObject.weekString') >= maxWeek;
-  }.property('weeksOnPage', 'maxWeek'),
+  }),
 
   actions: {
     decreaseWeek: function () {
@@ -289,13 +319,14 @@ export default Ember.Component.extend(DropdownComponentMixin, {
     return moment().year(year).month(month);
   },
 
-  updateDisplayedYearAndMonth: function () {
+
+  updateDisplayedYearAndMonth: Ember.observer('year', 'weekNumber', function () {
     if (this.get('year') && this.get('weekNumber')) {
       var m = this.currentMoment();
 
       this.setProperties({ 'displayedYear': m.year(), 'displayedMonthNumber': m.month() + 1 });
     }
-  }.observes('year', 'weekNumber').on('didInsertElement'),
+  }),
 
   buildWeekString: function (year, weekNumber) {
     if (year === null || weekNumber === null) {
